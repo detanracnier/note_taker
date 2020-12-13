@@ -11,7 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-
 let notes = [];
 let id = 0;
 
@@ -20,10 +19,6 @@ initialize();
 //Server html routes-------------------------------
 app.get("/notes", function (request, response) {
     response.sendFile(path.join(__dirname, "/public/notes.html"));
-});
-
-app.get("/", function (request, response) {
-    response.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
 //Server API routes--------------------------------
@@ -67,6 +62,12 @@ app.delete("/api/notes/:id", function (request, response) {
     });
     response.json(true);
 });
+
+//fallback
+app.get("*", function (request, response) {
+    response.sendFile(path.join(__dirname, "/public/index.html"));
+});
+
 
 //Turn on the server
 app.listen(PORT, function () {
